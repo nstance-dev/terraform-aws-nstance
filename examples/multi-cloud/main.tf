@@ -2,11 +2,11 @@
 # Copyright The Nstance Authors
 # SPDX-License-Identifier: Apache-2.0
 #
-# Multi-Cloud Deployment (AWS + GCP)
+# Multi-Cloud Deployment (AWS + Google Cloud)
 #
 # This example demonstrates a multi-cloud deployment with:
 # - Cluster resources in AWS (bucket + secrets)
-# - Shards in both AWS and GCP
+# - Shards in both AWS and Google Cloud
 # - Unified cluster coordination across clouds
 
 variable "aws_profile" {
@@ -19,13 +19,13 @@ variable "aws_region" {
   type        = string
 }
 
-variable "gcp_project" {
-  description = "GCP project ID"
+variable "google_project" {
+  description = "Google Cloud project ID"
   type        = string
 }
 
-variable "gcp_region" {
-  description = "GCP region"
+variable "google_region" {
+  description = "Google Cloud region"
   type        = string
 }
 
@@ -40,8 +40,8 @@ provider "aws" {
 }
 
 provider "google" {
-  project = var.gcp_project
-  region  = var.gcp_region
+  project = var.google_project
+  region  = var.google_region
 }
 
 # Cluster resources in AWS (bucket + secrets)
@@ -90,9 +90,9 @@ module "network_aws" {
   }
 }
 
-# GCP account module
-module "account_gcp" {
-  source  = "nstance-dev/nstance/gcp//modules/account"
+# Google Cloud account module
+module "account_google" {
+  source  = "nstance-dev/nstance/google//modules/account"
   version = "~> 1.0"
 
   providers = {
@@ -102,9 +102,9 @@ module "account_gcp" {
   cluster = module.cluster
 }
 
-# GCP network
-module "network_gcp" {
-  source  = "nstance-dev/nstance/gcp//modules/network"
+# Google Cloud network
+module "network_google" {
+  source  = "nstance-dev/nstance/google//modules/network"
   version = "~> 1.0"
 
   providers = {
@@ -152,8 +152,8 @@ module "shard_aws" {
   }
 }
 
-module "shard_gcp" {
-  source  = "nstance-dev/nstance/gcp//modules/shard"
+module "shard_google" {
+  source  = "nstance-dev/nstance/google//modules/shard"
   version = "~> 1.0"
 
   providers = {
@@ -161,8 +161,8 @@ module "shard_gcp" {
   }
 
   cluster = module.cluster
-  account = module.account_gcp
-  network = module.network_gcp
+  account = module.account_google
+  network = module.network_google
 
   shard = "us-central1-a"
   zone  = "us-central1-a"
