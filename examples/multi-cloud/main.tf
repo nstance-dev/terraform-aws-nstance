@@ -49,8 +49,10 @@ module "cluster" {
   source  = "nstance-dev/nstance/aws//modules/cluster"
   version = "~> 1.0"
 
-  aws_profile = var.aws_profile
-  cluster_id  = var.cluster_id
+  aws_profile             = var.aws_profile
+  cluster_id              = var.cluster_id
+  secrets_provider        = "object-storage"
+  encryption_key_provider = "aws-secrets-manager"
 }
 
 # AWS account module
