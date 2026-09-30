@@ -177,7 +177,7 @@ module "shard_1a" {
       "ingress" = {
         size           = 2
         subnet_pool    = "ingress"
-        load_balancers = { "www" = [] } # Register instances with all www listeners
+        load_balancers = ["www"]
       }
       "workers" = {
         size        = 10
@@ -207,7 +207,7 @@ module "shard_1b" {
       "ingress" = {
         size           = 2
         subnet_pool    = "ingress"
-        load_balancers = { "www" = [] }
+        load_balancers = ["www"]
       }
       "workers" = {
         size        = 10
@@ -237,7 +237,7 @@ module "shard_1c" {
       "ingress" = {
         size           = 2
         subnet_pool    = "ingress"
-        load_balancers = { "www" = [] }
+        load_balancers = ["www"]
       }
       "workers" = {
         size        = 10
