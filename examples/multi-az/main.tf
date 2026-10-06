@@ -49,8 +49,8 @@ module "network" {
   source  = "nstance-dev/nstance/aws//modules/network"
   version = "~> 2.0"
 
-  cluster          = module.cluster
-  use_provider_nat = true
+  cluster  = module.cluster
+  nat_mode = "provider"
 
   # Use existing VPC
   vpc_id = "vpc-prod123"
