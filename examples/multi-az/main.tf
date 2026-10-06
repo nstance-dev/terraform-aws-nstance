@@ -33,7 +33,7 @@ provider "aws" {
 
 module "cluster" {
   source  = "nstance-dev/nstance/aws//modules/cluster"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   aws_profile = var.profile
   cluster_id  = var.cluster_id
@@ -41,15 +41,16 @@ module "cluster" {
 
 module "account" {
   source  = "nstance-dev/nstance/aws//modules/account"
-  version = "~> 1.0"
+  version = "~> 2.0"
   cluster = module.cluster
 }
 
 module "network" {
   source  = "nstance-dev/nstance/aws//modules/network"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
-  cluster = module.cluster
+  cluster          = module.cluster
+  use_provider_nat = true
 
   # Use existing VPC
   vpc_id = "vpc-prod123"
@@ -159,7 +160,7 @@ module "network" {
 # Create shards for each AZ
 module "shard_1a" {
   source  = "nstance-dev/nstance/aws//modules/shard"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   cluster = module.cluster
   account = module.account
@@ -189,7 +190,7 @@ module "shard_1a" {
 
 module "shard_1b" {
   source  = "nstance-dev/nstance/aws//modules/shard"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   cluster = module.cluster
   account = module.account
@@ -219,7 +220,7 @@ module "shard_1b" {
 
 module "shard_1c" {
   source  = "nstance-dev/nstance/aws//modules/shard"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   cluster = module.cluster
   account = module.account

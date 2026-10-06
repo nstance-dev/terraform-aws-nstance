@@ -47,7 +47,7 @@ provider "google" {
 # Cluster resources in AWS (bucket + secrets)
 module "cluster" {
   source  = "nstance-dev/nstance/aws//modules/cluster"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   aws_profile             = var.aws_profile
   cluster_id              = var.cluster_id
@@ -58,7 +58,7 @@ module "cluster" {
 # AWS account module
 module "account_aws" {
   source  = "nstance-dev/nstance/aws//modules/account"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     aws = aws
@@ -70,14 +70,15 @@ module "account_aws" {
 # AWS network
 module "network_aws" {
   source  = "nstance-dev/nstance/aws//modules/network"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     aws = aws
   }
 
-  cluster       = module.cluster
-  vpc_cidr_ipv4 = "172.18.0.0/16"
+  cluster          = module.cluster
+  vpc_cidr_ipv4    = "172.18.0.0/16"
+  use_provider_nat = true
 
   subnets = {
     "public" = {
@@ -95,7 +96,7 @@ module "network_aws" {
 # Google Cloud account module
 module "account_google" {
   source  = "nstance-dev/nstance/google//modules/account"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     google = google
@@ -107,14 +108,15 @@ module "account_google" {
 # Google Cloud network
 module "network_google" {
   source  = "nstance-dev/nstance/google//modules/network"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     google = google
   }
 
-  cluster       = module.cluster
-  vpc_cidr_ipv4 = "172.19.0.0/16"
+  cluster          = module.cluster
+  vpc_cidr_ipv4    = "172.19.0.0/16"
+  use_provider_nat = true
 
   subnets = {
     "public" = {
@@ -131,7 +133,7 @@ module "network_google" {
 
 module "shard_aws" {
   source  = "nstance-dev/nstance/aws//modules/shard"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     aws = aws
@@ -156,7 +158,7 @@ module "shard_aws" {
 
 module "shard_google" {
   source  = "nstance-dev/nstance/google//modules/shard"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   providers = {
     google = google
